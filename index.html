@@ -92,10 +92,11 @@ const go=(f,...a)=>f(...a).catch(e=>T(e.code==='23505'?'Já existe um cadastro c
 const tbl=(h,r)=>r.length?`<div class="sc"><table><tr>${h.map(x=>`<th>${x}</th>`).join('')}</tr>${r.map(x=>`<tr>${x.map(y=>`<td>${y}</td>`).join('')}</tr>`).join('')}</table></div>`:'<p class="m">Nada por aqui ainda.</p>';
 const opts=a=>a.map(x=>`<option value="${x.id}">${esc(x.nome)}</option>`).join('');
 const back=()=>location.origin+location.pathname;
+const adminBack=()=>location.origin+location.pathname+'?area=admin';
 const nota='Quem faz aniversário ganha uma lavagem completa grátis, válida por 7 dias a partir do dia do aniversário. É preciso comprovar a data de nascimento com RG ou CNH.';
 
 let U=null,adm=false,D={servicos:[],cli:[],fila:[],lanc:[],cxs:[],cx:null,me:null,hist:[]},ui={tab:'fila',show:false,rec:false,cod:null,ld:true};
-const view=()=>location.hash==='#admin'&&(adm||ui.show)?'admin':'cliente';
+const view=()=>(location.hash==='#admin'||ui.show)&&(adm||ui.show)?'admin':'cliente';
 const anivJ=c=>{if(!c||!c.nasc)return null;const [,m,d]=c.nasc.split('-').map(Number),h=new Date(),hj=new Date(h.getFullYear(),h.getMonth(),h.getDate());
  for(const y of [h.getFullYear(),h.getFullYear()-1]){const i=new Date(y,m-1,d),f=new Date(y,m-1,d+6);if(hj>=i&&hj<=f)return c.aniv_ano===y?null:{ano:y,fim:f}}return null};
 
@@ -124,9 +125,10 @@ async function refresh(){
   }}
  ui.ld=false;render()}
 async function init(){
+ if(new URLSearchParams(location.search).get('area')==='admin')ui.show=true;
  if(!OK){ui.ld=false;$('#app').innerHTML='<section class="c"><h2>Falta configurar</h2><p>Abra o arquivo index.html e cole a URL e a chave do Supabase no começo do script. Veja o passo a passo no LEIA-ME.</p></section>';return}
+ sb.auth.onAuthStateChange((ev,ss)=>{if(ev==='PASSWORD_RECOVERY'){U=ss.user;ui.rec=true;ui.show=true;ui.ld=false;render()}});
  const s=await sb.auth.getSession();U=s.data.session?s.data.session.user:null;
- sb.auth.onAuthStateChange((ev,ss)=>{if(ev==='PASSWORD_RECOVERY'){U=ss.user;ui.rec=true;ui.ld=false;render()}});
  try{await refresh()}catch(e){ui.ld=false;render();T('Não consegui carregar os dados: '+e.message)}}
 function render(){const a=view()==='admin';
  $('#nav').style.display=(adm||ui.show)?'flex':'none';$('#n1').className=a?'':'on';$('#n2').className=a?'on':'';
@@ -152,6 +154,8 @@ async function cadastrar(){const v=id=>$('#'+id).value.trim(),em=v('re').toLower
  if(r.data.session){U=r.data.user;await refresh();T('Cadastro criado!')}else T('Cadastro criado. Abra o link enviado ao seu e-mail e depois entre.')}
 async function esqueci(){const e=$('#fe').value.trim();if(!emOk(e))throw new Error('Informe o e-mail do cadastro.');
  await q(sb.auth.resetPasswordForEmail(e,{redirectTo:back()}));T('Se esse e-mail estiver cadastrado, você vai receber o link para criar uma nova senha.')}
+async function esqueciAdmin(){const e=$('#fa').value.trim();if(!emOk(e))throw new Error('Informe o e-mail do administrador.');
+ await q(sb.auth.resetPasswordForEmail(e,{redirectTo:adminBack()}));T('Se esse e-mail estiver cadastrado, enviaremos o link para redefinir a senha administrativa.');}
 async function novaSenha(){const p=$('#ns').value;if(p.length<6)throw new Error('A senha precisa ter pelo menos 6 caracteres.');
  await q(sb.auth.updateUser({password:p}));ui.rec=false;T('Senha trocada.');await refresh()}
 async function vincular(){await q(sb.rpc('vincular_veiculo',{p_placa:$('#vp').value,p_modelo:$('#vm').value.trim()}));T('Veículo vinculado!');await refresh()}
@@ -179,7 +183,7 @@ function cliente(){
 }
 
 /* ---------- ADMINISTRATIVO ---------- */
-function adminLogin(){return `<section class="c" style="max-width:420px;margin:30px auto"><h2>Área administrativa</h2><div class="row"><input id="le" type="email" placeholder="E-mail do administrador" autocomplete="username"><input id="lp" type="password" placeholder="Senha" autocomplete="current-password"><button onclick="go(entrar,true)">Entrar</button></div>${U?'<p class="m" style="margin-top:8px">Você está logado com uma conta de cliente. Entre com a conta de administrador.</p>':''}</section>`}
+function adminLogin(){if(ui.rec)return `<section class="c" style="max-width:420px;margin:30px auto"><h2>Redefinir senha administrativa</h2><p>Digite uma nova senha para acessar o administrativo.</p><div class="row"><input id="ns" type="password" placeholder="Nova senha (mínimo 6 caracteres)" autocomplete="new-password"><button onclick="go(novaSenha)">Salvar nova senha</button></div></section>`;return `<section class="c" style="max-width:420px;margin:30px auto"><h2>Área administrativa</h2><div class="row"><input id="le" type="email" placeholder="E-mail do administrador" autocomplete="username"><input id="lp" type="password" placeholder="Senha" autocomplete="current-password"><button onclick="go(entrar,true)">Entrar</button></div><details style="margin-top:12px"><summary>Esqueci minha senha</summary><p class="m" style="margin-top:8px">Informe o e-mail usado no acesso administrativo. Enviaremos um link para criar uma nova senha.</p><div class="row"><input id="fa" type="email" placeholder="E-mail do administrador" autocomplete="email"><button onclick="go(esqueciAdmin)">Enviar link de recuperação</button></div></details>${U?'<p class="m" style="margin-top:8px">Você está logado com uma conta de cliente. Entre com a conta de administrador.</p>':''}</section>`}
 function go2(t){ui.tab=t;render()}
 function admin(){
  const tabs=[['fila','Fila'],['caixa','Caixa'],['clientes','Clientes'],['servicos','Serviços'],['resumo','Resumo']];
@@ -189,92 +193,4 @@ function admin(){
 const resumoCx=c=>{const L=D.lanc.filter(l=>l.caixa_id===c.id),lv=l=>l.tipo==='lav',s=f=>L.filter(f).reduce((a,l)=>a+Number(l.valor),0);
  return {L,n:L.filter(lv).length,fat:s(lv),pix:s(l=>lv(l)&&l.forma==='Pix'),cart:s(l=>lv(l)&&l.forma.startsWith('Cartão')),desp:s(l=>l.tipo==='desp'),
   din:Number(c.troco)+s(l=>lv(l)&&l.forma==='Dinheiro')+s(l=>l.tipo==='reforco')-s(l=>l.tipo==='desp')}};
-const fv=()=>{const c=D.cli.find(x=>x.id===$('#fcli').value),e=$('#fveic');e.style.display=c?'':'none';
- e.innerHTML=c?c.veiculos.map(v=>`<option value="${v.id}">${esc(v.placa||'Sem placa')} (${Math.min(v.ciclo,9)} de 9)</option>`).join('')+'<option value="">Outro veículo (digitar placa)</option>':''};
-
-/* Fila */
-function filaV(){
- return `<section class="c"><h2>Receber veículo</h2><div class="row"><select id="fcli" onchange="fv()"><option value="">Cliente avulso</option>${opts(D.cli)}</select><select id="fveic" style="display:none"></select><input id="fplaca" placeholder="Placa (veículo novo ou avulso)"><select id="fsrv">${opts(D.servicos)}</select><input id="fobs" placeholder="Observação (riscos, objetos no carro)"><button onclick="go(receber)">Receber veículo</button></div></section>
- <section class="c"><h2>Fila de serviço (${D.fila.length})</h2>${D.cx?'':'<p class="bad">O caixa está fechado. Abra o caixa na aba Caixa para poder entregar veículos.</p>'}${D.fila.map(o=>{
-  const cl=D.cli.find(x=>x.id===o.cliente_id),v=cl&&cl.veiculos.find(x=>x.id===o.veiculo_id),sv=D.servicos.find(x=>x.id===o.servico_id),bd=[];
-  if(v&&sv&&sv.simples&&v.ciclo>=9)bd.push('🎁 pode ser grátis (promoção da 10ª)');if(cl&&sv&&sv.completa&&anivJ(cl))bd.push('🎂 aniversário: conferir RG ou CNH');
-  return `<div class="cl"><div class="row" style="align-items:center"><b>${esc(o.placa||'Sem placa')}</b><span class="m" style="flex:1 1 150px">${esc(o.nome)}, ${esc(o.servico)} (${brl(o.preco)}), entrou às ${hr(o.recebido_em)}</span><b class="${o.status==='Pronto'?'ok':''}">${o.status}</b></div>${o.obs?`<div class="v m">${esc(o.obs)}</div>`:''}${bd.length?`<div class="v ok">${bd.join(' / ')}</div>`:''}
-  <div class="v">${o.status!=='Pronto'?`<button class="g" onclick="go(avancar,'${o.id}')">${o.status==='Na fila'?'Iniciar lavagem':'Marcar como pronto'}</button>`:''}<select id="ef_${o.id}" style="flex:0 1 150px" aria-label="Forma de pagamento"><option>Dinheiro</option><option>Pix</option><option>Cartão débito</option><option>Cartão crédito</option></select><button onclick="go(entregar,'${o.id}')">Entregar veículo</button><button class="x" onclick="go(cancelOS,'${o.id}')">Cancelar</button></div></div>`}).join('')||'<p class="m">Nenhum veículo na fila.</p>'}</section>`}
-async function receber(){const cl=D.cli.find(x=>x.id===$('#fcli').value),sv=D.servicos.find(x=>x.id===$('#fsrv').value);
- if(!sv)throw new Error('Cadastre um serviço primeiro.');
- let placa=pl($('#fplaca').value),v=null;
- if(cl){v=cl.veiculos.find(x=>x.id===$('#fveic').value);
-  if(!v){if(!placa)throw new Error('Informe a placa do veículo.');
-   if(D.cli.some(c=>c.id!==cl.id&&c.veiculos.some(x=>x.placa===placa)))throw new Error('Essa placa está vinculada a outro cliente.');
-   v=cl.veiculos.find(x=>x.placa===placa)||await q(sb.from('veiculos').insert({cliente_id:cl.id,placa}).select().single())}
-  placa=v.placa}
- if(!placa&&!cl)throw new Error('Informe a placa.');
- if(placa&&D.fila.some(o=>o.placa===placa))throw new Error('Esse veículo já está na fila.');
- await q(sb.from('fila').insert({cliente_id:cl?cl.id:null,veiculo_id:v?v.id:null,nome:cl?cl.nome:'Avulso',placa,servico_id:sv.id,servico:sv.nome,preco:sv.preco,obs:$('#fobs').value.trim()}));
- T('Veículo recebido e na fila.');await refresh()}
-async function avancar(id){const o=D.fila.find(x=>x.id===id);await q(sb.from('fila').update({status:o.status==='Na fila'?'Lavando':'Pronto'}).eq('id',id));await refresh()}
-async function cancelOS(id){if(!confirm('Tirar este veículo da fila? Nenhum valor entra no caixa.'))return;await q(sb.from('fila').delete().eq('id',id));await refresh()}
-async function entregar(id){const o=D.fila.find(x=>x.id===id);if(!o)return;
- if(!D.cx)throw new Error('Abra o caixa para receber o pagamento e entregar.');
- if(o.status!=='Pronto'&&!confirm('Este veículo ainda não está pronto. Entregar mesmo assim?'))return;
- const cl=D.cli.find(x=>x.id===o.cliente_id),sv=D.servicos.find(x=>x.id===o.servico_id);
- if(cl&&sv&&sv.completa&&anivJ(cl)&&!confirm('Aniversariante: você conferiu o RG ou a CNH do cliente?'))return;
- const val=await q(sb.rpc('entregar_veiculo',{p_fila:id,p_forma:$('#ef_'+id).value}));
- T(Number(val)?'Veículo entregue. '+brl(val)+' no caixa.':'Veículo entregue (lavagem grátis).');await refresh()}
-
-/* Caixa */
-function caixaV(){const c=D.cx;
- if(!c)return `<section class="c"><h2>Caixa fechado</h2><div class="row"><input id="troco" type="number" step="0.01" min="0" placeholder="Troco inicial (R$)"><button onclick="go(abrir)">Abrir caixa</button></div></section>
- <section class="c"><h2>Últimos fechamentos</h2>${tbl(['Aberto em','Fechado em','Esperado','Contado','Diferença'],D.cxs.map(x=>{const r=resumoCx(x),d=Number(x.contado)-r.din;return [dt(x.aberto_em),dt(x.fechado_em),brl(r.din),brl(x.contado),`<span class="${d<0?'bad':'ok'}">${brl(d)}</span>`]}))}</section>`;
- const r=resumoCx(c);
- return `<div class="kp"><div><b>${brl(r.fat)}</b><span>Faturado (${r.n} lavagens)</span></div><div><b>${brl(r.din)}</b><span>Dinheiro esperado</span></div><div><b>${brl(r.pix)}</b><span>Pix</span></div><div><b>${brl(r.cart)}</b><span>Cartão</span></div><div><b>${brl(r.desp)}</b><span>Despesas</span></div></div>
- <section class="c"><h2>Despesa ou reforço</h2><div class="row"><select id="mt"><option value="desp">Despesa ou sangria</option><option value="reforco">Reforço de caixa</option></select><input id="md" placeholder="Descrição"><input id="mv" type="number" step="0.01" min="0" placeholder="Valor (R$)"><button class="g" onclick="go(mov)">Registrar</button></div></section>
- <section class="c"><h2>Movimentos do caixa</h2>${tbl(['Hora','Tipo','Descrição','Forma','Valor',''],r.L.slice().reverse().map(l=>[hr(l.criado_em),l.tipo==='lav'?'Lavagem':l.tipo==='desp'?'Despesa':'Reforço',esc(l.tipo==='lav'?`${l.nome} ${l.placa?'('+l.placa+') ':''}- ${l.servico}${l.gratis?' (grátis)':''}`:l.nome),esc(l.forma),`<span class="${l.tipo==='desp'?'bad':''}">${l.tipo==='desp'?'-':''}${brl(l.valor)}</span>`,`<button class="x" onclick="go(del,'${l.id}')" aria-label="Cancelar lançamento">✕</button>`]))}</section>
- <section class="c"><h2>Fechar caixa</h2><p class="m">Aberto em ${dt(c.aberto_em)} com troco de ${brl(c.troco)}. Esperado em dinheiro: <b>${brl(r.din)}</b>.</p><div class="row"><input id="cont" type="number" step="0.01" min="0" placeholder="Dinheiro contado (R$)"><button onclick="go(fechar)">Fechar caixa</button></div></section>`}
-async function abrir(){await q(sb.from('caixas').insert({troco:parseFloat($('#troco').value)||0}));T('Caixa aberto.');await refresh()}
-async function mov(){const v=parseFloat($('#mv').value),d=$('#md').value.trim();if(!(v>0)||!d)throw new Error('Informe descrição e valor.');
- await q(sb.from('lancamentos').insert({caixa_id:D.cx.id,tipo:$('#mt').value,nome:d,valor:v,forma:'Dinheiro'}));T('Registrado.');await refresh()}
-async function del(id){if(!confirm('Cancelar este lançamento?'))return;await q(sb.rpc('cancelar_lancamento',{p_id:id}));T('Lançamento cancelado.');await refresh()}
-async function fechar(){const v=parseFloat($('#cont').value);if(isNaN(v))throw new Error('Informe o dinheiro contado.');
- const d=v-resumoCx(D.cx).din;if(!confirm((D.fila.length?D.fila.length+' veículo(s) ainda na fila, sem pagamento. ':'')+'Fechar o caixa? Diferença: '+brl(d)))return;
- await q(sb.from('caixas').update({fechado_em:new Date().toISOString(),contado:v}).eq('id',D.cx.id));T('Caixa fechado.');await refresh()}
-
-/* Clientes */
-function clientesV(){return `<section class="c"><h2>Novo cliente (cadastro no balcão)</h2><div class="row"><input id="rn" placeholder="Nome"><input id="rt" inputmode="tel" placeholder="Telefone com DDD"><input id="re" type="email" placeholder="E-mail (opcional)"><label class="lb">Data de nascimento<input id="rb" type="date"></label><input id="rp" placeholder="Placa"><input id="rm" placeholder="Modelo (opcional)"><button onclick="go(addCli)">Cadastrar</button></div><p class="m" style="margin-top:8px">${nota} Depois, o cliente cria a própria senha em “Cadastre-se”, usando o mesmo telefone e a mesma data de nascimento.</p></section>
- <section class="c"><h2>Vincular veículo ao telefone</h2><p class="m">Cada veículo tem o seu próprio cartão fidelidade.</p><div class="row"><select id="vc">${opts(D.cli)}</select><input id="vp" placeholder="Placa"><input id="vm" placeholder="Modelo (opcional)"><button onclick="go(addVei)">Vincular veículo</button></div></section>
- <section class="c"><h2>Clientes (${D.cli.length})</h2>${D.cli.map(c=>`<div class="cl"><div class="row" style="align-items:center"><b>${esc(c.nome)}</b><span class="m" style="flex:1 1 150px">${esc(c.tel)}${c.nasc?', nascimento '+fd(c.nasc):''}${c.email?', '+esc(c.email):''}${c.user_id?'':' (sem conta online)'}</span>${c.email&&c.user_id?`<button class="g" onclick="go(emailSenha,'${c.id}')">Enviar e-mail de nova senha</button>`:''}<button class="x" onclick="go(delCli,'${c.id}')">Excluir cliente</button></div>${c.veiculos.map(v=>`<div class="v"><span>${esc(v.placa||'Sem placa')}${v.modelo?' - '+esc(v.modelo):''}: ${v.ciclo>=9?'<span class="ok">lavagem grátis disponível</span>':v.ciclo+' de 9'}</span><button class="x" onclick="go(delVei,'${v.id}')">Remover veículo</button></div>`).join('')||'<div class="v m">Nenhum veículo vinculado.</div>'}</div>`).join('')||'<p class="m">Nenhum cliente ainda.</p>'}</section>`}
-async function addCli(){const g=id=>$('#'+id).value.trim(),em=g('re').toLowerCase(),p=pl($('#rp').value);
- if(!g('rn')||g('rt').replace(/\D/g,'').length<10)throw new Error('Informe nome e telefone com DDD.');
- if(!$('#rb').value)throw new Error('Informe a data de nascimento.');if(em&&!emOk(em))throw new Error('E-mail inválido.');
- if(p&&D.cli.some(c=>c.veiculos.some(v=>v.placa===p)))throw new Error('Essa placa já está vinculada a um cliente.');
- const c=await q(sb.from('clientes').insert({nome:g('rn'),tel:g('rt'),nasc:$('#rb').value,email:em||null}).select().single());
- if(p)await q(sb.from('veiculos').insert({cliente_id:c.id,placa:p,modelo:g('rm')}));T('Cliente cadastrado.');await refresh()}
-async function addVei(){const p=pl($('#vp').value);if(!$('#vc').value||!p)throw new Error('Escolha o cliente e informe a placa.');
- if(D.cli.some(c=>c.veiculos.some(v=>v.placa===p)))throw new Error('Essa placa já está vinculada a um cadastro.');
- await q(sb.from('veiculos').insert({cliente_id:$('#vc').value,placa:p,modelo:$('#vm').value.trim()}));T('Veículo vinculado.');await refresh()}
-async function delVei(id){if(!confirm('Remover este veículo e o cartão dele?'))return;await q(sb.from('veiculos').delete().eq('id',id));await refresh()}
-async function delCli(id){if(!confirm('Excluir este cliente e os veículos dele? O histórico de lançamentos é mantido.'))return;await q(sb.from('clientes').delete().eq('id',id));await refresh()}
-async function emailSenha(id){const c=D.cli.find(x=>x.id===id);await q(sb.auth.resetPasswordForEmail(c.email,{redirectTo:back()}));T('E-mail enviado para '+c.email+'.')}
-
-/* Serviços */
-function servicosV(){return `<section class="c"><h2>Serviços e preços</h2>${D.servicos.map(s=>`<div class="cl"><div class="row" style="align-items:center"><b style="flex:1 1 150px">${esc(s.nome)}${s.simples?' (promoção da 10ª lavagem)':''}${s.completa?' (brinde de aniversário)':''}</b><input type="number" step="0.01" min="0" value="${s.preco}" style="flex:0 0 110px" onchange="go(setP,'${s.id}',this.value)" aria-label="Valor de ${esc(s.nome)}"><button class="x" onclick="go(delSrv,'${s.id}')">Excluir serviço</button></div></div>`).join('')||'<p class="m">Nenhum serviço cadastrado.</p>'}</section>
- <section class="c"><h2>Novo serviço</h2><div class="row"><input id="sn" placeholder="Nome do serviço"><input id="sp" type="number" step="0.01" min="0" placeholder="Valor (R$)"><select id="ss"><option value="">Serviço comum</option><option value="s">É a lavagem simples (promoção da 10ª)</option><option value="c">É a lavagem completa (brinde de aniversário)</option></select><button onclick="go(addSrv)">Adicionar serviço</button></div></section>`}
-async function setP(id,v){await q(sb.from('servicos').update({preco:parseFloat(v)||0}).eq('id',id));T('Valor atualizado.');await refresh()}
-async function delSrv(id){if(!confirm('Excluir este serviço? Os lançamentos antigos continuam no histórico.'))return;await q(sb.from('servicos').delete().eq('id',id));T('Serviço excluído.');await refresh()}
-async function addSrv(){const n=$('#sn').value.trim(),p=parseFloat($('#sp').value),t=$('#ss').value;if(!n||isNaN(p))throw new Error('Informe nome e valor.');
- if(t==='s')await q(sb.from('servicos').update({simples:false}).eq('simples',true));if(t==='c')await q(sb.from('servicos').update({completa:false}).eq('completa',true));
- await q(sb.from('servicos').insert({nome:n,preco:p,simples:t==='s',completa:t==='c'}));T('Serviço adicionado.');await refresh()}
-
-/* Resumo */
-function resumoV(){
- const days=[...Array(7)].map((_,i)=>{const d=new Date();d.setDate(d.getDate()-6+i);return d}),lav=D.lanc.filter(l=>l.tipo==='lav');
- const vs=days.map(d=>lav.filter(l=>dia(l.criado_em)===dia(d)).reduce((a,l)=>a+Number(l.valor),0)),mx=Math.max(...vs,1);
- const by={};lav.forEach(l=>{by[l.servico]=by[l.servico]||{n:0,v:0};by[l.servico].n++;by[l.servico].v+=Number(l.valor)});
- return `<section class="c"><h2>Faturamento dos últimos 7 dias</h2>${days.map((d,i)=>`<div class="bar"><span>${d.toLocaleDateString('pt-BR',{weekday:'short'})}</span><div><b style="width:${vs[i]/mx*100}%"></b></div><em>${brl(vs[i])}</em></div>`).join('')}</section>
- <section class="c"><h2>Serviços mais vendidos (60 dias)</h2>${tbl(['Serviço','Lavagens','Faturado'],Object.keys(by).map(k=>[esc(k),by[k].n,brl(by[k].v)]))}</section>
- <section class="c"><h2>Fidelidade</h2><p>${D.cli.length} clientes, ${D.cli.reduce((a,c)=>a+c.veiculos.length,0)} veículos, ${D.cli.reduce((a,c)=>a+c.veiculos.filter(v=>v.ciclo>=9).length,0)} cartões com lavagem grátis disponível e ${lav.filter(l=>l.gratis).length} lavagens grátis dadas nos últimos 60 dias (${lav.filter(l=>l.aniv).length} de aniversário).</p></section>`}
-
-init();
-</script>
-</body>
-</html>
+const fv=()=>{const c=D.cli.find(x=>x
