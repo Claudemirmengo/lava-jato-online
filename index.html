@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lava Jato Motorista Finado Gregorio</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E%F0%9F%9A%97%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow:wght@400;600;700&display=swap">
+<style>
+:root{--bg:#f4f1e6;--sf:#fff;--tx:#1b1b1b;--mu:#6a6656;--ac:#f5c400;--on:#1b1b1b;--bd:#ddd8c4;--ok:#1b7f45;--bad:#b83224;--hd:#151515;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101010;--sf:#1c1c1c;--tx:#f1efe6;--mu:#a9a58f;--bd:#323232;--ok:#4cc380;--bad:#ff8272;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#101010;--sf:#1c1c1c;--tx:#f1efe6;--mu:#a9a58f;--bd:#323232;--ok:#4cc380;--bad:#ff8272;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 Barlow,system-ui,sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--hd);z-index:10}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--hd);color:#fff;padding:10px 16px;display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center;justify-content:space-between;border-bottom:4px solid var(--ac)}
+header h1{margin:0;font:400 26px/1 Anton,Impact,sans-serif;color:var(--ac);letter-spacing:.5px}
+header small{display:block;color:#ddd;font-size:13px}
+nav{display:flex;gap:6px}
+nav a{color:#fff;text-decoration:none;padding:6px 12px;border-radius:6px;border:1px solid #444;font-weight:600}
+nav a.on{background:var(--ac);color:#1b1b1b;border-color:var(--ac)}
+main{max-width:900px;margin:0 auto;padding:16px}
+h2{font:400 24px/1.1 Anton,Impact,sans-serif;margin:0 0 10px;letter-spacing:.3px}
+p{margin:0 0 8px}.m{color:var(--mu)}
+.c{background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:16px;margin-bottom:14px}
+.hero{background:var(--hd);color:#fff;border-color:var(--hd)}.hero h2{color:var(--ac);font-size:34px}.hero p{color:#ddd}
+.row{display:flex;flex-wrap:wrap;gap:8px}
+input,select,button{font:inherit;padding:9px 12px;border-radius:8px;border:1px solid var(--bd);background:var(--bg);color:var(--tx);min-width:0}
+input,select{flex:1 1 150px}
+button{background:var(--ac);color:var(--on);border-color:var(--ac);font-weight:700;cursor:pointer}
+button.g{background:transparent;color:var(--tx);border-color:var(--bd)}
+button.x{background:transparent;color:var(--bad);border-color:var(--bd);padding:3px 9px}
+button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid var(--ac);outline-offset:2px}
+.tabs{display:flex;gap:6px;overflow-x:auto;margin-bottom:14px}
+.tabs button{flex:none;background:var(--sf);color:var(--tx);border-color:var(--bd)}
+.tabs button.on{background:var(--ac);color:var(--on);border-color:var(--ac)}
+.sc{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--bd);white-space:nowrap}
+th{color:var(--mu);font-weight:600}
+.kp{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:14px}
+.kp div{background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:10px 12px}
+.kp b{display:block;font:400 24px/1.2 Anton,Impact,sans-serif}.kp span{color:var(--mu);font-size:14px}
+.card{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 0}
+.d{display:grid;place-items:center;aspect-ratio:1;border-radius:50%;border:2px dashed var(--mu);font:normal 600 16px Barlow,sans-serif;color:var(--mu)}
+.d.f{background:var(--ac);border:2px solid var(--ac);color:var(--on)}
+.d.g{border-style:solid;font-size:22px}
+.ok{color:var(--ok);font-weight:700}.bad{color:var(--bad);font-weight:700}
+.bar{display:grid;grid-template-columns:48px 1fr 90px;gap:8px;align-items:center;margin:4px 0}
+.bar div{background:var(--bd);border-radius:4px;height:14px}.bar b{display:block;height:100%;background:var(--ac);border-radius:4px}
+.bar em{font-style:normal;text-align:right}
+footer{text-align:center;color:var(--mu);font-size:14px;padding:6px 16px 24px}
+#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--hd);color:#fff;padding:10px 16px;border-radius:8px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:20;border:1px solid var(--ac)}
+.lb{display:flex;flex-direction:column;gap:2px;flex:1 1 150px;font-size:14px;color:var(--mu)}.lb input{width:100%}
+.cl{border-bottom:1px solid var(--bd);padding:10px 0}.cl:last-child{border:0}
+.v{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;padding:6px 0 0 12px}
+h3{font:600 17px/1.2 Barlow,sans-serif;margin:14px 0 8px}
+details.c>summary{font:400 24px/1.1 Anton,Impact,sans-serif;cursor:pointer;letter-spacing:.3px}
+a.btn{font:inherit;padding:9px 12px;border-radius:8px;border:1px solid var(--bd);color:var(--tx);text-decoration:none;font-weight:700}
+</style>
+</head>
+<body>
+<header>
+  <div id="logo"><h1>LAVA JATO</h1><small>Motorista Finado Gregorio</small></div>
+  <nav id="nav" style="display:none"><a href="#cliente" id="n1">Cliente</a><a href="#admin" id="n2">Administrativo</a></nav>
+</header>
+<main id="app"></main>
+<footer>Av. Marechal Castelo Branco, 1261, Teresina-PI<br>(86) 99540-3199</footer>
+<div id="toast" role="status"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script>
+/* ====== CONFIGURAÇÃO: cole aqui os dados do seu projeto Supabase (veja o LEIA-ME) ====== */
+const SUPABASE_URL='https://qhtlehhdyrgrmpcnnprz.supabase.co';
+const SUPABASE_KEY='sb_publishable_gP2tbSWwMYnjWkCsyYhpUA_aLcqD9ij';
+const ZAP='5586995403199'; /* WhatsApp do lava-jato com 55 e DDD, só números */
+/* ========================================================================================== */
+const OK=!SUPABASE_URL.startsWith('COLE');
+const sb=OK?supabase.createClient(SUPABASE_URL,SUPABASE_KEY):null;
+const $=s=>document.querySelector(s);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const brl=n=>Number(n||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const dt=t=>new Date(t).toLocaleString('pt-BR',{dateStyle:'short',timeStyle:'short'});
+const hr=t=>new Date(t).toLocaleTimeString('pt-BR',{timeStyle:'short'});
+const dia=t=>new Date(t).toLocaleDateString('pt-BR');
+const fd=d=>d.split('-').reverse().join('/');
+const pl=s=>s.trim().toUpperCase().replace(/[\s-]/g,'');
+const emOk=e=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
+const T=m=>{const t=$('#toast');t.textContent=m;t.style.opacity=1;clearTimeout(T.x);T.x=setTimeout(()=>t.style.opacity=0,3200)};
+const q=async p=>{const r=await p;if(r.error)throw r.error;return r.data};
+const go=(f,...a)=>f(...a).catch(e=>T(e.code==='23505'?'Já existe um cadastro com esses dados (telefone, e-mail ou placa).':(e.message||'Algo deu errado.')));
+const tbl=(h,r)=>r.length?`<div class="sc"><table><tr>${h.map(x=>`<th>${x}</th>`).join('')}</tr>${r.map(x=>`<tr>${x.map(y=>`<td>${y}</td>`).join('')}</tr>`).join('')}</table></div>`:'<p class="m">Nada por aqui ainda.</p>';
+const opts=a=>a.map(x=>`<option value="${x.id}">${esc(x.nome)}</option>`).join('');
+const back=()=>location.origin+location.pathname;
+const nota='Quem faz aniversário ganha uma lavagem completa grátis, válida por 7 dias a partir do dia do aniversário. É preciso comprovar a data de nascimento com RG ou CNH.';
+
+let U=null,adm=false,D={servicos:[],cli:[],fila:[],lanc:[],cxs:[],cx:null,me:null,hist:[]},ui={tab:'fila',show:false,rec:false,cod:null,ld:true};
+const view=()=>location.hash==='#admin'&&(adm||ui.show)?'admin':'cliente';
+const anivJ=c=>{if(!c||!c.nasc)return null;const [,m,d]=c.nasc.split('-').map(Number),h=new Date(),hj=new Date(h.getFullYear(),h.getMonth(),h.getDate());
+ for(const y of [h.getFullYear(),h.getFullYear()-1]){const i=new Date(y,m-1,d),f=new Date(y,m-1,d+6);if(hj>=i&&hj<=f)return c.aniv_ano===y?null:{ano:y,fim:f}}return null};
+
+/* ---------- dados ---------- */
+async function refresh(){
+ D.servicos=await q(sb.from('servicos').select('*').order('nome'));
+ adm=false;D.me=null;
+ if(U){
+  adm=!!(await q(sb.from('admins').select('id').eq('id',U.id).maybeSingle()));
+  if(adm){
+   [D.cli,D.fila,D.cx,D.lanc,D.cxs]=await Promise.all([
+    q(sb.from('clientes').select('*,veiculos(*)').order('nome')),
+    q(sb.from('fila').select('*').order('recebido_em')),
+    q(sb.from('caixas').select('*').is('fechado_em',null).order('aberto_em',{ascending:false}).limit(1).maybeSingle()),
+    q(sb.from('lancamentos').select('*').gte('criado_em',new Date(Date.now()-60*864e5).toISOString()).order('criado_em')),
+    q(sb.from('caixas').select('*').not('fechado_em','is',null).order('fechado_em',{ascending:false}).limit(6))]);
+  }else{
+   const load=()=>q(sb.from('clientes').select('*,veiculos(*)').eq('user_id',U.id).maybeSingle());
+   D.me=await load();
+   if(!D.me){const m=U.user_metadata||{};
+    try{await q(sb.rpc('cadastrar_conta',{p_nome:m.nome||'',p_tel:m.tel||'',p_nasc:m.nasc||null,p_placa:m.placa||'',p_modelo:m.modelo||''}));D.me=await load()}
+    catch(e){T(e.message);await sb.auth.signOut();U=null}}
+   if(D.me)[D.fila,D.hist]=await Promise.all([
+    q(sb.from('fila').select('*').eq('cliente_id',D.me.id)),
+    q(sb.from('lancamentos').select('*').eq('cliente_id',D.me.id).eq('tipo','lav').order('criado_em',{ascending:false}).limit(10))]);
+  }}
+ ui.ld=false;render()}
+async function init(){
+ if(!OK){ui.ld=false;$('#app').innerHTML='<section class="c"><h2>Falta configurar</h2><p>Abra o arquivo index.html e cole a URL e a chave do Supabase no começo do script. Veja o passo a passo no LEIA-ME.</p></section>';return}
+ const s=await sb.auth.getSession();U=s.data.session?s.data.session.user:null;
+ sb.auth.onAuthStateChange((ev,ss)=>{if(ev==='PASSWORD_RECOVERY'){U=ss.user;ui.rec=true;ui.ld=false;render()}});
+ try{await refresh()}catch(e){ui.ld=false;render();T('Não consegui carregar os dados: '+e.message)}}
+function render(){const a=view()==='admin';
+ $('#nav').style.display=(adm||ui.show)?'flex':'none';$('#n1').className=a?'':'on';$('#n2').className=a?'on':'';
+ $('#app').innerHTML=ui.ld?'<p class="m">Carregando</p>':a?(adm?admin():adminLogin()):cliente()}
+addEventListener('hashchange',render);
+const tp=[];
+$('#logo').addEventListener('click',()=>{const n=Date.now();while(tp.length&&n-tp[0]>3000)tp.shift();tp.push(n);
+ if(tp.length>=5){tp.length=0;ui.show=true;location.hash='#admin';render()}});
+
+/* ---------- login, cadastro e senha ---------- */
+async function entrar(isAdm){const r=await sb.auth.signInWithPassword({email:$('#le').value.trim(),password:$('#lp').value});
+ if(r.error)throw new Error('E-mail ou senha incorretos.');U=r.data.user;await refresh();
+ if(isAdm&&!adm){await sb.auth.signOut();U=null;await refresh();throw new Error('Esta conta não é de administrador.')}}
+async function sair(){await sb.auth.signOut();U=null;ui.show=false;ui.cod=null;location.hash='#cliente';await refresh()}
+async function cadastrar(){const v=id=>$('#'+id).value.trim(),em=v('re').toLowerCase(),pw=$('#rs').value;
+ if(!v('rn')||v('rt').replace(/\D/g,'').length<10)throw new Error('Informe nome e telefone com DDD.');
+ if(!emOk(em))throw new Error('Informe um e-mail válido.');
+ if(!$('#rb').value)throw new Error('Informe a data de nascimento.');
+ if(pw.length<6)throw new Error('A senha precisa ter pelo menos 6 caracteres.');
+ if(pw!==$('#rs2').value)throw new Error('As senhas não são iguais.');
+ const r=await sb.auth.signUp({email:em,password:pw,options:{emailRedirectTo:back(),data:{nome:v('rn'),tel:v('rt'),nasc:$('#rb').value,placa:pl($('#rp').value),modelo:v('rm')}}});
+ if(r.error)throw r.error;
+ if(r.data.session){U=r.data.user;await refresh();T('Cadastro criado!')}else T('Cadastro criado. Abra o link enviado ao seu e-mail e depois entre.')}
+async function esqueci(){const e=$('#fe').value.trim();if(!emOk(e))throw new Error('Informe o e-mail do cadastro.');
+ await q(sb.auth.resetPasswordForEmail(e,{redirectTo:back()}));T('Se esse e-mail estiver cadastrado, você vai receber o link para criar uma nova senha.')}
+async function novaSenha(){const p=$('#ns').value;if(p.length<6)throw new Error('A senha precisa ter pelo menos 6 caracteres.');
+ await q(sb.auth.updateUser({password:p}));ui.rec=false;T('Senha trocada.');await refresh()}
+async function vincular(){await q(sb.rpc('vincular_veiculo',{p_placa:$('#vp').value,p_modelo:$('#vm').value.trim()}));T('Veículo vinculado!');await refresh()}
+
+/* ---------- CLIENTE ---------- */
+function precos(){return `<section class="c"><h2>Serviços e valores</h2>${tbl(['Serviço','Valor'],D.servicos.map(s=>[esc(s.nome),brl(s.preco)]))}</section>`}
+function vcard(v){const n=Math.min(v.ciclo,9),livre=v.ciclo>=9;
+ const dots=[...Array(9)].map((_,i)=>`<i class="d ${i<n?'f':''}">${i<n?'✓':i+1}</i>`).join('')+`<i class="d g ${livre?'f':''}">🎁</i>`;
+ return `<section class="c"><h2>${esc(v.placa||'Veículo')}${v.modelo?' - '+esc(v.modelo):''}</h2><div class="card">${dots}</div><p>${livre?'<span class="ok">Lavagem simples grátis disponível neste veículo.</span> Vale de segunda a sexta, das 8h às 17h.':`Faltam <b>${9-n}</b> lavagens para a lavagem simples grátis.`}</p></section>`}
+function cliente(){
+ const h=`<section class="c hero"><h2>A 10ª lavagem simples é por nossa conta</h2><p>A cada 9 lavagens, a 10ª lavagem simples é grátis. Promoção válida de segunda a sexta, das 8h às 17h.</p></section>`;
+ if(ui.rec)return `<section class="c"><h2>Criar nova senha</h2><div class="row"><input id="ns" type="password" placeholder="Nova senha (mínimo 6 caracteres)" autocomplete="new-password"><button onclick="go(novaSenha)">Salvar senha</button></div></section>`;
+ if(adm)return h+`<section class="c"><p>Você está logado como administrador.</p><button class="g" onclick="go(sair)">Sair</button></section>`+precos();
+ const cl=D.me;
+ if(!U||!cl)return h+`<section class="c"><h2>Entrar</h2><div class="row"><input id="le" type="email" placeholder="E-mail" autocomplete="username"><input id="lp" type="password" placeholder="Senha" autocomplete="current-password"><button onclick="go(entrar)">Entrar</button></div></section>
+ <details class="c"><summary>Esqueci minha senha</summary><p class="m" style="margin-top:8px">Enviamos um link para o seu e-mail para criar uma nova senha.</p><div class="row"><input id="fe" type="email" placeholder="E-mail do cadastro"><button onclick="go(esqueci)">Enviar link por e-mail</button><a class="btn" target="_blank" rel="noopener" href="https://wa.me/${ZAP}?text=${encodeURIComponent('Olá! Esqueci minha senha do cartão fidelidade do Lava Jato. Podem me ajudar?')}">Pedir ajuda pelo WhatsApp</a></div></details>
+ <details class="c" open><summary>Primeira vez aqui? Cadastre-se</summary><div class="row" style="margin-top:8px"><input id="rn" placeholder="Seu nome"><input id="rt" inputmode="tel" placeholder="Telefone com DDD"><input id="re" type="email" placeholder="E-mail"><label class="lb">Data de nascimento<input id="rb" type="date"></label><input id="rs" type="password" placeholder="Senha (mínimo 6 caracteres)" autocomplete="new-password"><input id="rs2" type="password" placeholder="Repita a senha" autocomplete="new-password"><input id="rp" placeholder="Placa do carro"><input id="rm" placeholder="Modelo (opcional)"><button onclick="go(cadastrar)">Criar meus cartões</button></div><p class="m" style="margin-top:8px">${nota}</p></details>`+precos();
+ const aj=anivJ(cl);
+ return h+`<section class="c"><div class="row" style="justify-content:space-between;align-items:center"><h2 style="margin:0">Olá, ${esc(cl.nome.split(' ')[0])}</h2><button class="g" onclick="go(sair)">Sair</button></div>
+ ${aj?`<p class="ok" style="margin-top:10px">🎂 Feliz aniversário! Você tem uma lavagem completa grátis até ${aj.fim.toLocaleDateString('pt-BR')}. Leve o RG ou a CNH.</p>`:''}<p class="m" style="margin-top:8px">${nota}</p></section>`
+ +(D.fila.length?`<section class="c"><h2>Seu veículo no lava-jato</h2>${D.fila.map(o=>`<p><b>${esc(o.placa||'Veículo')}</b>: ${o.status==='Pronto'?'<span class="ok">pronto para retirada</span>':o.status==='Lavando'?'sendo lavado':'na fila'} (${esc(o.servico)})</p>`).join('')}</section>`:'')
+ +(cl.veiculos.length?cl.veiculos.map(vcard).join(''):'<section class="c"><p class="m">Nenhum veículo vinculado ainda. Vincule o primeiro abaixo.</p></section>')
+ +`<section class="c"><h2>Vincular outro veículo</h2><p class="m">Cada veículo tem o seu próprio cartão.</p><div class="row"><input id="vp" placeholder="Placa"><input id="vm" placeholder="Modelo (opcional)"><button onclick="go(vincular)">Vincular veículo</button></div></section>
+ <section class="c"><h2>Minhas últimas lavagens</h2>${tbl(['Data','Veículo','Serviço','Valor'],D.hist.map(l=>[dt(l.criado_em),esc(l.placa||'-'),esc(l.servico),l.gratis?'<span class="ok">Grátis</span>':brl(l.valor)]))}</section>`+precos();
+}
+
+/* ---------- ADMINISTRATIVO ---------- */
+function adminLogin(){return `<section class="c" style="max-width:420px;margin:30px auto"><h2>Área administrativa</h2><div class="row"><input id="le" type="email" placeholder="E-mail do administrador" autocomplete="username"><input id="lp" type="password" placeholder="Senha" autocomplete="current-password"><button onclick="go(entrar,true)">Entrar</button></div>${U?'<p class="m" style="margin-top:8px">Você está logado com uma conta de cliente. Entre com a conta de administrador.</p>':''}</section>`}
+function go2(t){ui.tab=t;render()}
+function admin(){
+ const tabs=[['fila','Fila'],['caixa','Caixa'],['clientes','Clientes'],['servicos','Serviços'],['resumo','Resumo']];
+ const f={fila:filaV,caixa:caixaV,clientes:clientesV,servicos:servicosV,resumo:resumoV}[ui.tab];
+ return `<div class="tabs">${tabs.map(t=>`<button class="${ui.tab===t[0]?'on':''}" onclick="go2('${t[0]}')">${t[1]}</button>`).join('')}<button class="g" onclick="go(sair)">Sair</button></div>`+f();
+}
+const resumoCx=c=>{const L=D.lanc.filter(l=>l.caixa_id===c.id),lv=l=>l.tipo==='lav',s=f=>L.filter(f).reduce((a,l)=>a+Number(l.valor),0);
+ return {L,n:L.filter(lv).length,fat:s(lv),pix:s(l=>lv(l)&&l.forma==='Pix'),cart:s(l=>lv(l)&&l.forma.startsWith('Cartão')),desp:s(l=>l.tipo==='desp'),
+  din:Number(c.troco)+s(l=>lv(l)&&l.forma==='Dinheiro')+s(l=>l.tipo==='reforco')-s(l=>l.tipo==='desp')}};
+const fv=()=>{const c=D.cli.find(x=>x.id===$('#fcli').value),e=$('#fveic');e.style.display=c?'':'none';
+ e.innerHTML=c?c.veiculos.map(v=>`<option value="${v.id}">${esc(v.placa||'Sem placa')} (${Math.min(v.ciclo,9)} de 9)</option>`).join('')+'<option value="">Outro veículo (digitar placa)</option>':''};
+
+/* Fila */
+function filaV(){
+ return `<section class="c"><h2>Receber veículo</h2><div class="row"><select id="fcli" onchange="fv()"><option value="">Cliente avulso</option>${opts(D.cli)}</select><select id="fveic" style="display:none"></select><input id="fplaca" placeholder="Placa (veículo novo ou avulso)"><select id="fsrv">${opts(D.servicos)}</select><input id="fobs" placeholder="Observação (riscos, objetos no carro)"><button onclick="go(receber)">Receber veículo</button></div></section>
+ <section class="c"><h2>Fila de serviço (${D.fila.length})</h2>${D.cx?'':'<p class="bad">O caixa está fechado. Abra o caixa na aba Caixa para poder entregar veículos.</p>'}${D.fila.map(o=>{
+  const cl=D.cli.find(x=>x.id===o.cliente_id),v=cl&&cl.veiculos.find(x=>x.id===o.veiculo_id),sv=D.servicos.find(x=>x.id===o.servico_id),bd=[];
+  if(v&&sv&&sv.simples&&v.ciclo>=9)bd.push('🎁 pode ser grátis (promoção da 10ª)');if(cl&&sv&&sv.completa&&anivJ(cl))bd.push('🎂 aniversário: conferir RG ou CNH');
+  return `<div class="cl"><div class="row" style="align-items:center"><b>${esc(o.placa||'Sem placa')}</b><span class="m" style="flex:1 1 150px">${esc(o.nome)}, ${esc(o.servico)} (${brl(o.preco)}), entrou às ${hr(o.recebido_em)}</span><b class="${o.status==='Pronto'?'ok':''}">${o.status}</b></div>${o.obs?`<div class="v m">${esc(o.obs)}</div>`:''}${bd.length?`<div class="v ok">${bd.join(' / ')}</div>`:''}
+  <div class="v">${o.status!=='Pronto'?`<button class="g" onclick="go(avancar,'${o.id}')">${o.status==='Na fila'?'Iniciar lavagem':'Marcar como pronto'}</button>`:''}<select id="ef_${o.id}" style="flex:0 1 150px" aria-label="Forma de pagamento"><option>Dinheiro</option><option>Pix</option><option>Cartão débito</option><option>Cartão crédito</option></select><button onclick="go(entregar,'${o.id}')">Entregar veículo</button><button class="x" onclick="go(cancelOS,'${o.id}')">Cancelar</button></div></div>`}).join('')||'<p class="m">Nenhum veículo na fila.</p>'}</section>`}
+async function receber(){const cl=D.cli.find(x=>x.id===$('#fcli').value),sv=D.servicos.find(x=>x.id===$('#fsrv').value);
+ if(!sv)throw new Error('Cadastre um serviço primeiro.');
+ let placa=pl($('#fplaca').value),v=null;
+ if(cl){v=cl.veiculos.find(x=>x.id===$('#fveic').value);
+  if(!v){if(!placa)throw new Error('Informe a placa do veículo.');
+   if(D.cli.some(c=>c.id!==cl.id&&c.veiculos.some(x=>x.placa===placa)))throw new Error('Essa placa está vinculada a outro cliente.');
+   v=cl.veiculos.find(x=>x.placa===placa)||await q(sb.from('veiculos').insert({cliente_id:cl.id,placa}).select().single())}
+  placa=v.placa}
+ if(!placa&&!cl)throw new Error('Informe a placa.');
+ if(placa&&D.fila.some(o=>o.placa===placa))throw new Error('Esse veículo já está na fila.');
+ await q(sb.from('fila').insert({cliente_id:cl?cl.id:null,veiculo_id:v?v.id:null,nome:cl?cl.nome:'Avulso',placa,servico_id:sv.id,servico:sv.nome,preco:sv.preco,obs:$('#fobs').value.trim()}));
+ T('Veículo recebido e na fila.');await refresh()}
+async function avancar(id){const o=D.fila.find(x=>x.id===id);await q(sb.from('fila').update({status:o.status==='Na fila'?'Lavando':'Pronto'}).eq('id',id));await refresh()}
+async function cancelOS(id){if(!confirm('Tirar este veículo da fila? Nenhum valor entra no caixa.'))return;await q(sb.from('fila').delete().eq('id',id));await refresh()}
+async function entregar(id){const o=D.fila.find(x=>x.id===id);if(!o)return;
+ if(!D.cx)throw new Error('Abra o caixa para receber o pagamento e entregar.');
+ if(o.status!=='Pronto'&&!confirm('Este veículo ainda não está pronto. Entregar mesmo assim?'))return;
+ const cl=D.cli.find(x=>x.id===o.cliente_id),sv=D.servicos.find(x=>x.id===o.servico_id);
+ if(cl&&sv&&sv.completa&&anivJ(cl)&&!confirm('Aniversariante: você conferiu o RG ou a CNH do cliente?'))return;
+ const val=await q(sb.rpc('entregar_veiculo',{p_fila:id,p_forma:$('#ef_'+id).value}));
+ T(Number(val)?'Veículo entregue. '+brl(val)+' no caixa.':'Veículo entregue (lavagem grátis).');await refresh()}
+
+/* Caixa */
+function caixaV(){const c=D.cx;
+ if(!c)return `<section class="c"><h2>Caixa fechado</h2><div class="row"><input id="troco" type="number" step="0.01" min="0" placeholder="Troco inicial (R$)"><button onclick="go(abrir)">Abrir caixa</button></div></section>
+ <section class="c"><h2>Últimos fechamentos</h2>${tbl(['Aberto em','Fechado em','Esperado','Contado','Diferença'],D.cxs.map(x=>{const r=resumoCx(x),d=Number(x.contado)-r.din;return [dt(x.aberto_em),dt(x.fechado_em),brl(r.din),brl(x.contado),`<span class="${d<0?'bad':'ok'}">${brl(d)}</span>`]}))}</section>`;
+ const r=resumoCx(c);
+ return `<div class="kp"><div><b>${brl(r.fat)}</b><span>Faturado (${r.n} lavagens)</span></div><div><b>${brl(r.din)}</b><span>Dinheiro esperado</span></div><div><b>${brl(r.pix)}</b><span>Pix</span></div><div><b>${brl(r.cart)}</b><span>Cartão</span></div><div><b>${brl(r.desp)}</b><span>Despesas</span></div></div>
+ <section class="c"><h2>Despesa ou reforço</h2><div class="row"><select id="mt"><option value="desp">Despesa ou sangria</option><option value="reforco">Reforço de caixa</option></select><input id="md" placeholder="Descrição"><input id="mv" type="number" step="0.01" min="0" placeholder="Valor (R$)"><button class="g" onclick="go(mov)">Registrar</button></div></section>
+ <section class="c"><h2>Movimentos do caixa</h2>${tbl(['Hora','Tipo','Descrição','Forma','Valor',''],r.L.slice().reverse().map(l=>[hr(l.criado_em),l.tipo==='lav'?'Lavagem':l.tipo==='desp'?'Despesa':'Reforço',esc(l.tipo==='lav'?`${l.nome} ${l.placa?'('+l.placa+') ':''}- ${l.servico}${l.gratis?' (grátis)':''}`:l.nome),esc(l.forma),`<span class="${l.tipo==='desp'?'bad':''}">${l.tipo==='desp'?'-':''}${brl(l.valor)}</span>`,`<button class="x" onclick="go(del,'${l.id}')" aria-label="Cancelar lançamento">✕</button>`]))}</section>
+ <section class="c"><h2>Fechar caixa</h2><p class="m">Aberto em ${dt(c.aberto_em)} com troco de ${brl(c.troco)}. Esperado em dinheiro: <b>${brl(r.din)}</b>.</p><div class="row"><input id="cont" type="number" step="0.01" min="0" placeholder="Dinheiro contado (R$)"><button onclick="go(fechar)">Fechar caixa</button></div></section>`}
+async function abrir(){await q(sb.from('caixas').insert({troco:parseFloat($('#troco').value)||0}));T('Caixa aberto.');await refresh()}
+async function mov(){const v=parseFloat($('#mv').value),d=$('#md').value.trim();if(!(v>0)||!d)throw new Error('Informe descrição e valor.');
+ await q(sb.from('lancamentos').insert({caixa_id:D.cx.id,tipo:$('#mt').value,nome:d,valor:v,forma:'Dinheiro'}));T('Registrado.');await refresh()}
+async function del(id){if(!confirm('Cancelar este lançamento?'))return;await q(sb.rpc('cancelar_lancamento',{p_id:id}));T('Lançamento cancelado.');await refresh()}
+async function fechar(){const v=parseFloat($('#cont').value);if(isNaN(v))throw new Error('Informe o dinheiro contado.');
+ const d=v-resumoCx(D.cx).din;if(!confirm((D.fila.length?D.fila.length+' veículo(s) ainda na fila, sem pagamento. ':'')+'Fechar o caixa? Diferença: '+brl(d)))return;
+ await q(sb.from('caixas').update({fechado_em:new Date().toISOString(),contado:v}).eq('id',D.cx.id));T('Caixa fechado.');await refresh()}
+
+/* Clientes */
+function clientesV(){return `<section class="c"><h2>Novo cliente (cadastro no balcão)</h2><div class="row"><input id="rn" placeholder="Nome"><input id="rt" inputmode="tel" placeholder="Telefone com DDD"><input id="re" type="email" placeholder="E-mail (opcional)"><label class="lb">Data de nascimento<input id="rb" type="date"></label><input id="rp" placeholder="Placa"><input id="rm" placeholder="Modelo (opcional)"><button onclick="go(addCli)">Cadastrar</button></div><p class="m" style="margin-top:8px">${nota} Depois, o cliente cria a própria senha em “Cadastre-se”, usando o mesmo telefone e a mesma data de nascimento.</p></section>
+ <section class="c"><h2>Vincular veículo ao telefone</h2><p class="m">Cada veículo tem o seu próprio cartão fidelidade.</p><div class="row"><select id="vc">${opts(D.cli)}</select><input id="vp" placeholder="Placa"><input id="vm" placeholder="Modelo (opcional)"><button onclick="go(addVei)">Vincular veículo</button></div></section>
+ <section class="c"><h2>Clientes (${D.cli.length})</h2>${D.cli.map(c=>`<div class="cl"><div class="row" style="align-items:center"><b>${esc(c.nome)}</b><span class="m" style="flex:1 1 150px">${esc(c.tel)}${c.nasc?', nascimento '+fd(c.nasc):''}${c.email?', '+esc(c.email):''}${c.user_id?'':' (sem conta online)'}</span>${c.email&&c.user_id?`<button class="g" onclick="go(emailSenha,'${c.id}')">Enviar e-mail de nova senha</button>`:''}<button class="x" onclick="go(delCli,'${c.id}')">Excluir cliente</button></div>${c.veiculos.map(v=>`<div class="v"><span>${esc(v.placa||'Sem placa')}${v.modelo?' - '+esc(v.modelo):''}: ${v.ciclo>=9?'<span class="ok">lavagem grátis disponível</span>':v.ciclo+' de 9'}</span><button class="x" onclick="go(delVei,'${v.id}')">Remover veículo</button></div>`).join('')||'<div class="v m">Nenhum veículo vinculado.</div>'}</div>`).join('')||'<p class="m">Nenhum cliente ainda.</p>'}</section>`}
+async function addCli(){const g=id=>$('#'+id).value.trim(),em=g('re').toLowerCase(),p=pl($('#rp').value);
+ if(!g('rn')||g('rt').replace(/\D/g,'').length<10)throw new Error('Informe nome e telefone com DDD.');
+ if(!$('#rb').value)throw new Error('Informe a data de nascimento.');if(em&&!emOk(em))throw new Error('E-mail inválido.');
+ if(p&&D.cli.some(c=>c.veiculos.some(v=>v.placa===p)))throw new Error('Essa placa já está vinculada a um cliente.');
+ const c=await q(sb.from('clientes').insert({nome:g('rn'),tel:g('rt'),nasc:$('#rb').value,email:em||null}).select().single());
+ if(p)await q(sb.from('veiculos').insert({cliente_id:c.id,placa:p,modelo:g('rm')}));T('Cliente cadastrado.');await refresh()}
+async function addVei(){const p=pl($('#vp').value);if(!$('#vc').value||!p)throw new Error('Escolha o cliente e informe a placa.');
+ if(D.cli.some(c=>c.veiculos.some(v=>v.placa===p)))throw new Error('Essa placa já está vinculada a um cadastro.');
+ await q(sb.from('veiculos').insert({cliente_id:$('#vc').value,placa:p,modelo:$('#vm').value.trim()}));T('Veículo vinculado.');await refresh()}
+async function delVei(id){if(!confirm('Remover este veículo e o cartão dele?'))return;await q(sb.from('veiculos').delete().eq('id',id));await refresh()}
+async function delCli(id){if(!confirm('Excluir este cliente e os veículos dele? O histórico de lançamentos é mantido.'))return;await q(sb.from('clientes').delete().eq('id',id));await refresh()}
+async function emailSenha(id){const c=D.cli.find(x=>x.id===id);await q(sb.auth.resetPasswordForEmail(c.email,{redirectTo:back()}));T('E-mail enviado para '+c.email+'.')}
+
+/* Serviços */
+function servicosV(){return `<section class="c"><h2>Serviços e preços</h2>${D.servicos.map(s=>`<div class="cl"><div class="row" style="align-items:center"><b style="flex:1 1 150px">${esc(s.nome)}${s.simples?' (promoção da 10ª lavagem)':''}${s.completa?' (brinde de aniversário)':''}</b><input type="number" step="0.01" min="0" value="${s.preco}" style="flex:0 0 110px" onchange="go(setP,'${s.id}',this.value)" aria-label="Valor de ${esc(s.nome)}"><button class="x" onclick="go(delSrv,'${s.id}')">Excluir serviço</button></div></div>`).join('')||'<p class="m">Nenhum serviço cadastrado.</p>'}</section>
+ <section class="c"><h2>Novo serviço</h2><div class="row"><input id="sn" placeholder="Nome do serviço"><input id="sp" type="number" step="0.01" min="0" placeholder="Valor (R$)"><select id="ss"><option value="">Serviço comum</option><option value="s">É a lavagem simples (promoção da 10ª)</option><option value="c">É a lavagem completa (brinde de aniversário)</option></select><button onclick="go(addSrv)">Adicionar serviço</button></div></section>`}
+async function setP(id,v){await q(sb.from('servicos').update({preco:parseFloat(v)||0}).eq('id',id));T('Valor atualizado.');await refresh()}
+async function delSrv(id){if(!confirm('Excluir este serviço? Os lançamentos antigos continuam no histórico.'))return;await q(sb.from('servicos').delete().eq('id',id));T('Serviço excluído.');await refresh()}
+async function addSrv(){const n=$('#sn').value.trim(),p=parseFloat($('#sp').value),t=$('#ss').value;if(!n||isNaN(p))throw new Error('Informe nome e valor.');
+ if(t==='s')await q(sb.from('servicos').update({simples:false}).eq('simples',true));if(t==='c')await q(sb.from('servicos').update({completa:false}).eq('completa',true));
+ await q(sb.from('servicos').insert({nome:n,preco:p,simples:t==='s',completa:t==='c'}));T('Serviço adicionado.');await refresh()}
+
+/* Resumo */
+function resumoV(){
+ const days=[...Array(7)].map((_,i)=>{const d=new Date();d.setDate(d.getDate()-6+i);return d}),lav=D.lanc.filter(l=>l.tipo==='lav');
+ const vs=days.map(d=>lav.filter(l=>dia(l.criado_em)===dia(d)).reduce((a,l)=>a+Number(l.valor),0)),mx=Math.max(...vs,1);
+ const by={};lav.forEach(l=>{by[l.servico]=by[l.servico]||{n:0,v:0};by[l.servico].n++;by[l.servico].v+=Number(l.valor)});
+ return `<section class="c"><h2>Faturamento dos últimos 7 dias</h2>${days.map((d,i)=>`<div class="bar"><span>${d.toLocaleDateString('pt-BR',{weekday:'short'})}</span><div><b style="width:${vs[i]/mx*100}%"></b></div><em>${brl(vs[i])}</em></div>`).join('')}</section>
+ <section class="c"><h2>Serviços mais vendidos (60 dias)</h2>${tbl(['Serviço','Lavagens','Faturado'],Object.keys(by).map(k=>[esc(k),by[k].n,brl(by[k].v)]))}</section>
+ <section class="c"><h2>Fidelidade</h2><p>${D.cli.length} clientes, ${D.cli.reduce((a,c)=>a+c.veiculos.length,0)} veículos, ${D.cli.reduce((a,c)=>a+c.veiculos.filter(v=>v.ciclo>=9).length,0)} cartões com lavagem grátis disponível e ${lav.filter(l=>l.gratis).length} lavagens grátis dadas nos últimos 60 dias (${lav.filter(l=>l.aniv).length} de aniversário).</p></section>`}
+
+init();
+</script>
+</body>
+</html>
